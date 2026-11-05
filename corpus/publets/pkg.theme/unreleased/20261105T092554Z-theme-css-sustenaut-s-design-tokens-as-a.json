@@ -1,0 +1,4 @@
+{
+  "category": "added",
+  "change": "theme.css: Sustenaut's design tokens as a Tailwind 4 @theme (colours, fonts, radii, a panel shadow), with dark mode under the same names"
+}
