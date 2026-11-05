@@ -1,0 +1,111 @@
+{
+  "claims": {
+    "identity": {
+      "class": "archival",
+      "content": "theme 0.1.0 is released as v0.1.0 from commit 56745623ac344fbc57334ef82dfbc5139631c6d0.",
+      "data": {
+        "columns": [
+          {
+            "name": "name"
+          },
+          {
+            "name": "version"
+          },
+          {
+            "name": "check"
+          },
+          {
+            "name": "expect"
+          },
+          {
+            "name": "tag"
+          },
+          {
+            "name": "commit"
+          }
+        ],
+        "rows": [
+          [
+            "theme",
+            "0.1.0",
+            "",
+            "",
+            "v0.1.0",
+            "56745623ac344fbc57334ef82dfbc5139631c6d0"
+          ]
+        ]
+      },
+      "scope": "the published release v0.1.0 of theme",
+      "sources": [
+        {
+          "ref": "theme",
+          "revision": "56745623ac344fbc57334ef82dfbc5139631c6d0"
+        }
+      ]
+    },
+    "release": {
+      "class": "archival",
+      "content": "theme 0.1.0 was released on 2026-11-05 from commit 56745623ac344fbc57334ef82dfbc5139631c6d0 with these changes.",
+      "data": {
+        "columns": [
+          {
+            "name": "category"
+          },
+          {
+            "name": "change"
+          }
+        ],
+        "rows": [
+          [
+            "added",
+            "base.css: optional element defaults (page colours, text font, links) in plain CSS"
+          ],
+          [
+            "added",
+            "fonts.css and fonts/: Nunito and Nunito Sans, variable weight, Latin and Latin Extended, under the SIL Open Font License"
+          ],
+          [
+            "added",
+            "theme.css: Sustenaut's design tokens as a Tailwind 4 @theme (colours, fonts, radii, a panel shadow), with dark mode under the same names"
+          ],
+          [
+            "added",
+            "tokens.css: the same tokens as plain custom properties, for a page with no build step"
+          ]
+        ]
+      },
+      "depends": [
+        "#identity"
+      ],
+      "scope": "the published release v0.1.0 of theme",
+      "sources": [
+        {
+          "ref": "theme",
+          "revision": "56745623ac344fbc57334ef82dfbc5139631c6d0"
+        }
+      ]
+    }
+  },
+  "created": "2026-11-05T00:00:00Z",
+  "sections": [
+    {
+      "heading": "Identity",
+      "items": [
+        {
+          "ref": "#identity"
+        }
+      ]
+    },
+    {
+      "heading": "Release",
+      "items": [
+        {
+          "ref": "#release"
+        }
+      ]
+    }
+  ],
+  "slug": "pkg.theme",
+  "tag": "PKG-STHEME-11-2026",
+  "title": "theme"
+}
