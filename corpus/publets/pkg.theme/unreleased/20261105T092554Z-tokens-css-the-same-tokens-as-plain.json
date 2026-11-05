@@ -1,0 +1,4 @@
+{
+  "category": "added",
+  "change": "tokens.css: the same tokens as plain custom properties, for a page with no build step"
+}

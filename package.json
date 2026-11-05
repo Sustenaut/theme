@@ -1,0 +1,37 @@
+{
+  "name": "@sustenaut/theme",
+  "version": "0.1.0",
+  "description": "Sustenaut's design tokens and fonts: a Tailwind 4 theme, the same tokens as plain CSS, and Nunito and Nunito Sans.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    "./theme.css": "./theme.css",
+    "./tokens.css": "./tokens.css",
+    "./fonts.css": "./fonts.css",
+    "./base.css": "./base.css",
+    "./tokens.json": "./tokens.json",
+    "./fonts/*": "./fonts/*"
+  },
+  "files": [
+    "theme.css",
+    "tokens.css",
+    "fonts.css",
+    "base.css",
+    "tokens.json",
+    "fonts"
+  ],
+  "scripts": {
+    "build": "node tools/build.js",
+    "test": "mkdir -p coverage && node --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage/lcov.info test/*.test.js"
+  },
+  "devDependencies": {
+    "tailwindcss": "4.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sustenaut/theme.git"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

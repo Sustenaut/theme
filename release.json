@@ -1,0 +1,35 @@
+{
+  "name": "theme",
+  "package": "pkg.theme",
+  "tag": "PKG-STHEME-11-2026",
+  "corpus": "corpus",
+  "manifest": {
+    "kind": "npm",
+    "path": "package.json"
+  },
+  "code": [
+    "theme.css",
+    "tokens.css",
+    "fonts.css",
+    "base.css",
+    "tokens.json",
+    "fonts/",
+    "tools/",
+    "package.json",
+    "package-lock.json"
+  ],
+  "install": "npm install github:Sustenaut/theme#{tag}",
+  "jsdelivr": {
+    "files": [
+      "tokens.css",
+      "fonts.css",
+      "base.css",
+      "theme.css",
+      "fonts/nunito-latin-wght-normal.woff2",
+      "fonts/nunito-latin-ext-wght-normal.woff2",
+      "fonts/nunito-sans-latin-wght-normal.woff2",
+      "fonts/nunito-sans-latin-ext-wght-normal.woff2"
+    ]
+  },
+  "key": "pub:sha2-256:p5okwv2fjqyotpzmjxpzpf7q6w7vwwaxcn7go34xm65yzpc7whtq"
+}

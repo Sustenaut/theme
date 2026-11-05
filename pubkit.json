@@ -1,0 +1,19 @@
+{
+  "kind": "utility",
+  "ci": {
+    "with": {
+      "coverage-report": "coverage/",
+      "sonar-args": "-Dsonar.tests=test -Dsonar.exclusions=test/**"
+    },
+    "release": {}
+  },
+  "protect": {
+    "checks": [
+      "ci / passed",
+      "release / release",
+      "SonarCloud Code Analysis",
+      "integrations / scan"
+    ],
+    "release_app": 5529889
+  }
+}
