@@ -3,39 +3,59 @@
 
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { test } from 'node:test';
+import { After, Then } from "@cucumber/cucumber";
+import { mock as nodeMock } from "node:test";
 
 import { compile } from 'tailwindcss';
 
 import { files } from '../tools/build.js';
 
+// What node:test gave each test as `t`: its mocks, restored when the
+// scenario ends, and the cleanups it registers with t.after().
+const cleanups = [];
+const scenarioContext = { mock: nodeMock, after: (fn) => cleanups.push(fn) };
+After("@theme", async function () {
+  while (cleanups.length) await cleanups.pop()();
+  nodeMock.restoreAll();
+});
+
+
 const root = new URL('../', import.meta.url);
 const read = (name) => fs.readFileSync(new URL(name, root), 'utf8');
 
-test('theme.css and tokens.css are what tools/build.js writes from tokens.json', () => {
+Then("theme.css and tokens.css are what tools\\/build.js writes from tokens.json", function () {
+  return (() => {
   for (const [name, text] of Object.entries(files)) assert.equal(read(name), text, `${name} is stale: run npm run build`);
+})(scenarioContext);
 });
 
-test('every dark token overrides a light one', () => {
+Then("every dark token overrides a light one", function () {
+  return (() => {
   const { light, dark } = JSON.parse(read('tokens.json'));
   assert.deepEqual(Object.keys(dark).filter((name) => !(name in light)), []);
+})(scenarioContext);
 });
 
-test('every font fonts.css names is in fonts/, and every font in fonts/ is named', () => {
+Then("every font fonts.css names is in fonts\\/, and every font in fonts\\/ is named", function () {
+  return (() => {
   const named = [...read('fonts.css').matchAll(/url\("([^"]+)"\)/g)].map((m) => m[1]).sort();
   const present = fs.readdirSync(new URL('fonts/', root)).filter((f) => f.endsWith('.woff2')).map((f) => `fonts/${f}`).sort();
   assert.deepEqual(named, present);
+})(scenarioContext);
 });
 
-test('the font families fonts.css declares are the ones the tokens name first', () => {
+Then("the font families fonts.css declares are the ones the tokens name first", function () {
+  return (() => {
   const families = new Set([...read('fonts.css').matchAll(/font-family: "([^"]+)"/g)].map((m) => m[1]));
   const { light } = JSON.parse(read('tokens.json'));
   for (const token of ['font-sans', 'font-display']) {
     assert.ok(families.has(light[token][0].match(/^"([^"]+)"/)[1]), token);
   }
+})(scenarioContext);
 });
 
-test('Tailwind 4 makes the utilities from theme.css', async () => {
+Then("Tailwind 4 makes the utilities from theme.css", function () {
+  return (async () => {
   const compiler = await compile(`${read('theme.css')}\n@tailwind utilities;`);
   const css = compiler.build(['bg-surface', 'text-muted', 'border-rule', 'font-display', 'rounded-panel',
     'shadow-panel', 'text-seed']);
@@ -44,12 +64,15 @@ test('Tailwind 4 makes the utilities from theme.css', async () => {
     'color: var(--color-seed)']) {
     assert.ok(css.includes(want), want);
   }
+})(scenarioContext);
 });
 
-test('shadow-panel follows dark mode, as the colours do', async () => {
+Then("shadow-panel follows dark mode, as the colours do", function () {
+  return (async () => {
   const theme = read('theme.css');
   const compiler = await compile(`${theme}\n@tailwind utilities;`);
   assert.ok(compiler.build(['shadow-panel']).includes('--tw-shadow: var(--shadow-panel-value)'));
   assert.match(theme.slice(theme.indexOf('@media')), /--shadow-panel-value: 0 8px 28px rgba\(0, 0, 0, 0.5\)/);
   assert.match(read('tokens.css'), /--shadow-panel: 0 8px 28px rgba\(0, 0, 0, 0.5\)/);
+})(scenarioContext);
 });
